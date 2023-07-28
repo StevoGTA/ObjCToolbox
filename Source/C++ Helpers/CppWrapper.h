@@ -1,5 +1,5 @@
 //
-//  OCTWrapper.h
+//  CppWrapper.h
 //  ObjC Toolbox
 //
 //  Created by Stevo on 7/4/23.
@@ -10,9 +10,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 //----------------------------------------------------------------------------------------------------------------------
-// MARK: OCTWrapper
+// MARK: CppWrapper
 
-@interface OCTWrapper : NSObject
+@interface CppWrapper : NSObject
 
 // MARK: Properties
 

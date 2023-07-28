@@ -1,23 +1,23 @@
 //
-//  OCTWrapper.mm
+//  CppWrapper.mm
 //  ObjC Toolbox
 //
 //  Created by Stevo on 7/4/23.
 //
 
-#import "OCTWrapper.h"
+#import "CppWrapper.h"
 
 //----------------------------------------------------------------------------------------------------------------------
-// MARK: OCTWrapper
+// MARK: CppWrapper
 
-@interface OCTWrapper ()
+@interface CppWrapper ()
 
 @property (nonatomic, assign)	const	void*	_object;
 @property (nonatomic, copy)				void	(^deleteProc)(const void* object);
 
 @end
 
-@implementation OCTWrapper
+@implementation CppWrapper
 
 // MARK: Properties
 
@@ -32,7 +32,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 + (instancetype) wrapperWith:(const void*) object deleteProc:(void (^)(const void* object)) deleteProc
 {
-	return [[OCTWrapper alloc] initWith:object deleteProc:deleteProc];
+	return [[CppWrapper alloc] initWith:object deleteProc:deleteProc];
 }
 
 // MARK: Lifecycle methods
