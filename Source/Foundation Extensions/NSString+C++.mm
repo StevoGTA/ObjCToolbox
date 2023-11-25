@@ -7,13 +7,7 @@
 #include "CDictionary.h"
 
 //----------------------------------------------------------------------------------------------------------------------
-// MARK: Local proc declarations
-
-static	NSString*	sStringFor(const CString& string);
-
-//----------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
-// MARK: - CString
+// MARK: CString
 
 // MARK: Lifecycle methods
 
@@ -23,8 +17,10 @@ CString::CString(const CString& localizationGroup, const CString& localizationKe
 {
 	// Setup
 	mStringRef =
-			(CFStringRef) ::CFBridgingRetain([[NSBundle mainBundle] localizedStringForKey:sStringFor(localizationKey)
-					value:sStringFor(localizationKey) table:sStringFor(localizationGroup)]);
+			(CFStringRef) ::CFBridgingRetain([[NSBundle mainBundle]
+					localizedStringForKey:(__bridge NSString*) localizationKey.getOSString()
+					value:(__bridge NSString*) localizationKey.getOSString()
+					table:(__bridge NSString*) localizationGroup.getOSString()]);
 
 	// Check situation
 	if (mStringRef != nil) {
@@ -81,8 +77,10 @@ CString::CString(const CString& localizationGroup, const CString& localizationKe
 {
 	// Setup
 	mStringRef =
-			(CFStringRef) ::CFBridgingRetain([[NSBundle mainBundle] localizedStringForKey:sStringFor(localizationKey)
-					value:sStringFor(localizationKey) table:sStringFor(localizationGroup)]);
+			(CFStringRef) ::CFBridgingRetain([[NSBundle mainBundle]
+					localizedStringForKey:(__bridge NSString*) localizationKey.getOSString()
+					value:(__bridge NSString*) localizationKey.getOSString()
+					table:(__bridge NSString*) localizationGroup.getOSString()]);
 	if (mStringRef == nil)
 		// Not found
 		mStringRef = (localizationGroup + mColon + localizationKey).getOSString();
@@ -94,33 +92,13 @@ CString::CString(const CString& localizationGroup, const CString& localizationKe
 
 @implementation NSString (Cpp)
 
-// MARK: Class methods
-
-//----------------------------------------------------------------------------------------------------------------------
-+ (NSString*) stringForCString:(const CString&) string
-{
-	return sStringFor(string);
-}
-
 // MARK: Instance methods
 
 //----------------------------------------------------------------------------------------------------------------------
 - (NSString*) stringByReplacingOccurrencesOfCString:(const CString&) target withCString:(const CString&) replacement
 {
-	return [self stringByReplacingOccurrencesOfString:sStringFor(target) withString:sStringFor(replacement)];
+	return [self stringByReplacingOccurrencesOfString:(__bridge NSString*) target.getOSString()
+			withString:(__bridge NSString*) replacement.getOSString()];
 }
 
 @end
-
-//----------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
-// MARK: - Local proc definitions
-
-//----------------------------------------------------------------------------------------------------------------------
-NSString* sStringFor(const CString& string)
-//----------------------------------------------------------------------------------------------------------------------
-{
-	return CFBridgingRelease(
-			::CFStringCreateWithCString(kCFAllocatorDefault, *string.getCString(CString::kEncodingUTF8),
-			kCFStringEncodingUTF8));
-}

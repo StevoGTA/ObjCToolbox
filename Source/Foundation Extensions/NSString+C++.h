@@ -15,10 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (Cpp)
 
-// MARK: Class methods
-
-+ (NSString*) stringForCString:(const CString&) string;
-
 // MARK: Instance methods
 
 - (NSString*) stringByReplacingOccurrencesOfCString:(const CString&) target withCString:(const CString&) replacement;
