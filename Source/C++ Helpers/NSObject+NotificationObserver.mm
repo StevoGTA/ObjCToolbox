@@ -136,6 +136,14 @@ static	void	sNotificationHandler(const CString& notificationName, const OR<CNoti
 			notificationObserverOptions:kNotificationObserverOptionsNone with:notificationProc];
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+- (void) unregisterForNotificationNamed:(const CString&) notificationName
+		notificationCenter:(CNotificationCenter&) notificationCenter
+{
+	// Remove
+	objc_setAssociatedObject(self, &notificationName, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end
 
 //----------------------------------------------------------------------------------------------------------------------

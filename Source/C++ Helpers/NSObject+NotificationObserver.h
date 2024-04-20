@@ -41,6 +41,9 @@ typedef NS_ENUM(NSInteger, NotificationObserverOptions) {
 - (void) registerForNotificationNamed:(const CString&) notificationName
 		notificationCenter:(CNotificationCenter&) notificationCenter with:(NotificationProc) notificationProc;
 
+- (void) unregisterForNotificationNamed:(const CString&) notificationName
+		notificationCenter:(CNotificationCenter&) notificationCenter;
+
 @end
 
 NS_ASSUME_NONNULL_END
