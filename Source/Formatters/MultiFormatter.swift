@@ -1,23 +1,47 @@
 //
-//  MaxLengthTextFormatter.swift
+//  MultiFormatter.swift
 //  ObjC Toolbox
 //
-//  Created by Stevo on 9/20/24.
+//  Created by Stevo on 10/11/24.
 //
 
 import Foundation
 
 //----------------------------------------------------------------------------------------------------------------------
-// MARK: MaxLengthTextFormatter
-class MaxLengthTextFormatter : Formatter {
+// MARK: MultiFormatter
+class MultiFormatter : Formatter {
 
 	// MARK: Properties
-	private	let	maxLength :Int
+	@objc			var	wasFilteredProc :() -> Void = {}
+
+			private	let	allowedCharacterSet :CharacterSet?
+			private	let	maxLength :Int?
 
 	// MARK: Lifecycle methods
 	//------------------------------------------------------------------------------------------------------------------
+	@objc init(allowedCharacterSet :CharacterSet, maxLength :Int) {
+		// Store
+		self.allowedCharacterSet = allowedCharacterSet
+		self.maxLength = maxLength
+
+		// Do super
+		super.init()
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	@objc init(allowedCharacterSet :CharacterSet) {
+		// Store
+		self.allowedCharacterSet = allowedCharacterSet
+		self.maxLength = nil
+
+		// Do super
+		super.init()
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	@objc init(maxLength :Int) {
 		// Store
+		self.allowedCharacterSet = nil
 		self.maxLength = maxLength
 
 		// Do super
@@ -34,7 +58,7 @@ class MaxLengthTextFormatter : Formatter {
 	//------------------------------------------------------------------------------------------------------------------
 	override func getObjectValue(_ obj :AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string :String,
 			errorDescription error :AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
-		//
+		// Return info
 		obj?.pointee = string as AnyObject
 
 		return true
@@ -45,13 +69,34 @@ class MaxLengthTextFormatter : Formatter {
 			proposedSelectedRange proposedSelRangePtr :NSRangePointer?, originalString origString :String,
 			originalSelectedRange origSelRange :NSRange,
 			errorDescription error :AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+		// Setup
+		let	initialLength = partialStringPtr.pointee.length
+
+		// Check allowed characters
+		if let allowedCharacterSet = self.allowedCharacterSet {
+			// Remove dis-allowed characters
+			partialStringPtr.pointee =
+					String(partialStringPtr.pointee).filter({ allowedCharacterSet.contains($0.unicodeScalars.first!) })
+							as NSString
+		}
+
 		// Check length
-		if partialStringPtr.pointee.length <= self.maxLength { return true }
+		if let maxLength = self.maxLength {
+			// Trim
+			partialStringPtr.pointee = String(partialStringPtr.pointee).prefix(maxLength) as NSString
+		}
 
-		// Trim
-		partialStringPtr.pointee = String(partialStringPtr.pointee).prefix(self.maxLength) as NSString
-		proposedSelRangePtr?.pointee = NSMakeRange(self.maxLength, 0)
+		if partialStringPtr.pointee.length == initialLength {
+			// Unchanged
+			return true
+		} else {
+			// Was filtered
+			proposedSelRangePtr?.pointee = NSMakeRange(partialStringPtr.pointee.length, 0)
 
-		return false;
+			// Call proc
+			self.wasFilteredProc()
+
+			return false
+		}
 	}
 }
