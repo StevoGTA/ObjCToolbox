@@ -35,6 +35,12 @@
 	return [[CppWrapper alloc] initWith:object deleteProc:deleteProc];
 }
 
+//----------------------------------------------------------------------------------------------------------------------
++ (instancetype) wrapperWith:(const void*) object
+{
+	return [[CppWrapper alloc] initWith:object];
+}
+
 // MARK: Lifecycle methods
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -52,9 +58,25 @@
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+- (instancetype) initWith:(const void*) object
+{
+	// Do super
+	self = [super init];
+	if (self) {
+		// Store
+		self._object = object;
+	}
+
+	return self;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 - (void) dealloc
 {
-	self.deleteProc(self._object);
+	// Check for deleteProc
+	if (self.deleteProc != nil)
+		// Cleanup
+		self.deleteProc(self._object);
 }
 
 @end

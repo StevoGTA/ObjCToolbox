@@ -21,10 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 // MARK: Class methods
 
 + (instancetype) wrapperWith:(const void*) object deleteProc:(void (^)(const void* object)) deleteProc;
++ (instancetype) wrapperWith:(const void*) object;
 
 // MARK: Lifecycle methods
 
 - (instancetype) initWith:(const void*) object deleteProc:(void (^)(const void* object)) deleteProc;
+- (instancetype) initWith:(const void*) object;
 
 @end
 
