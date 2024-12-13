@@ -51,10 +51,6 @@
 		case CString::kCharacterSetPunctuation:
 			// Punctuation
 			return [NSCharacterSet punctuationCharacterSet];
-
-		case CString::kCharacterSetCapitalizedLetter:
-			// Capitalized letter
-			return [NSCharacterSet capitalizedLetterCharacterSet];
 	}
 }
 
