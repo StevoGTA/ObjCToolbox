@@ -32,6 +32,10 @@
 			// Decimal digit
 			return [NSCharacterSet decimalDigitCharacterSet];
 
+		case CString::kCharacterSetFloatingPoint:
+			// Floating point
+			return [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
+
 		case CString::kCharacterSetLetter:
 			// Letter
 			return [NSCharacterSet letterCharacterSet];
