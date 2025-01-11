@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: Class methods
 
++ (CFolder) folderFor:(NSURL*) url;
+
 + (SFoldersFiles) foldersFilesFor:(NSArray<NSURL*>*) urls;
+
 + (TArray<CFolder>) foldersFor:(NSArray<NSURL*>*) urls;
 + (TArray<CFile>) filesFor:(NSArray<NSURL*>*) urls;
 
