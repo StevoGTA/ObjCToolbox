@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (TArray<CFolder>) foldersFor:(NSArray<NSURL*>*) urls;
 + (TArray<CFile>) filesFor:(NSArray<NSURL*>*) urls;
 
++ (NSURL*) urlFor:(const CFolder&) folder;
+
 @end
 
 NS_ASSUME_NONNULL_END

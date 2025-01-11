@@ -80,4 +80,10 @@
 	return files;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
++ (NSURL*) urlFor:(const CFolder&) folder
+{
+	return [NSURL fileURLWithPath:(__bridge NSString*) folder.getFilesystemPath().getString().getOSString()];
+}
+
 @end
