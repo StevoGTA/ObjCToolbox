@@ -18,17 +18,18 @@ NS_ASSUME_NONNULL_BEGIN
 // MARK: Properties
 
 @property (nonatomic, readonly)	CFilesystemPath filesystemPath;
+@property (nonatomic, readonly)	CFolder			folder;
+
+// MARK: Lifecycle methods
+
+- (instancetype) initWithFolder:(const CFolder&) folder;
 
 // MARK: Class methods
-
-+ (CFolder) folderFor:(NSURL*) url;
 
 + (SFoldersFiles) foldersFilesFor:(NSArray<NSURL*>*) urls;
 
 + (TArray<CFolder>) foldersFor:(NSArray<NSURL*>*) urls;
 + (TArray<CFile>) filesFor:(NSArray<NSURL*>*) urls;
-
-+ (NSURL*) urlFor:(const CFolder&) folder;
 
 @end
 

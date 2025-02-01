@@ -17,13 +17,21 @@
 	return CFilesystemPath(CString((__bridge OSStringType) self.path));
 }
 
-// MARK: Class methods
+//----------------------------------------------------------------------------------------------------------------------
+- (CFolder) folder
+{
+	return CFolder(CFilesystemPath(CString((__bridge OSStringType) self.path)));
+}
+
+// MARK: Lifecycle methods
 
 //----------------------------------------------------------------------------------------------------------------------
-+ (CFolder) folderFor:(NSURL*) url
+- (instancetype) initWithFolder:(const CFolder&) folder
 {
-	return CFolder(url.filesystemPath);
+	return [self initFileURLWithPath:(__bridge NSString*) folder.getFilesystemPath().getString().getOSString()];
 }
+
+// MARK: Class methods
 
 //----------------------------------------------------------------------------------------------------------------------
 + (SFoldersFiles) foldersFilesFor:(NSArray<NSURL*>*) urls
@@ -78,12 +86,6 @@
 	}
 
 	return files;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-+ (NSURL*) urlFor:(const CFolder&) folder
-{
-	return [NSURL fileURLWithPath:(__bridge NSString*) folder.getFilesystemPath().getString().getOSString()];
 }
 
 @end
