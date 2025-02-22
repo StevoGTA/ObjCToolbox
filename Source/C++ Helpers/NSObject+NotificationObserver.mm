@@ -51,7 +51,7 @@
 		self.notificationCenter->unregisterObserver(*self.notificationName, (__bridge const void*) self);
 
 	// Cleanup
-	Delete(self.notificationName);
+	delete self.notificationName;
 }
 
 @end
