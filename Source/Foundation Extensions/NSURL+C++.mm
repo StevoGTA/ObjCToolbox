@@ -12,9 +12,9 @@
 // MARK: Properties
 
 //----------------------------------------------------------------------------------------------------------------------
-- (CFilesystemPath) filesystemPath
+- (CFile) file
 {
-	return CFilesystemPath(CString((__bridge OSStringType) self.path));
+	return CFile(CFilesystemPath(CString((__bridge OSStringType) self.path)));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -45,10 +45,10 @@
 		// Check if directory
 		if (url.hasDirectoryPath)
 			// Folder
-			folders += CFolder(url.filesystemPath);
+			folders += url.folder;
 		else
 			// File
-			files += CFile(url.filesystemPath);
+			files += url.file;
 	}
 
 	return SFoldersFiles(folders, files);
@@ -65,7 +65,7 @@
 		// Check if directory
 		if (url.hasDirectoryPath)
 			// Folder
-			folders += CFolder(url.filesystemPath);
+			folders += url.folder;
 	}
 
 	return folders;
@@ -82,7 +82,7 @@
 		// Check if directory
 		if (!url.hasDirectoryPath)
 			// File
-			files += CFile(url.filesystemPath);
+			files += url.file;
 	}
 
 	return files;

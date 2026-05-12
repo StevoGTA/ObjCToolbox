@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: Properties
 
-@property (nonatomic, readonly)	CFilesystemPath filesystemPath;
+@property (nonatomic, readonly)	CFile			file;
 @property (nonatomic, readonly)	CFolder			folder;
 
 // MARK: Lifecycle methods
