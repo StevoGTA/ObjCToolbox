@@ -14,13 +14,14 @@
 //----------------------------------------------------------------------------------------------------------------------
 + (instancetype) dataWithReferenceTo:(const CData&) data
 {
-	return [[NSData alloc] initWithBytesNoCopy:(void*) data.getBytePtr() length:data.getByteCount()];
+	return [[NSData alloc] initWithBytesNoCopy:(void*) *data.getUInt8Buffer() length:data.getByteCount()
+			freeWhenDone:NO];
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 + (instancetype) dataWithCopyOf:(const CData&) data
 {
-	return [[NSData alloc] initWithBytes:data.getBytePtr() length:data.getByteCount()];
+	return [[NSData alloc] initWithBytes:*data.getUInt8Buffer() length:data.getByteCount()];
 }
 
 @end
