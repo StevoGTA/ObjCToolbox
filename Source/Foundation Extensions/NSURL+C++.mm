@@ -26,12 +26,6 @@
 // MARK: Lifecycle methods
 
 //----------------------------------------------------------------------------------------------------------------------
-- (instancetype) initWithFile:(const CFile&) file
-{
-	return [self initFileURLWithPath:(__bridge NSString*) file.getFilesystemPath().getString().getOSString()];
-}
-
-//----------------------------------------------------------------------------------------------------------------------
 - (instancetype) initWithFolder:(const CFolder&) folder
 {
 	return [self initFileURLWithPath:(__bridge NSString*) folder.getFilesystemPath().getString().getOSString()];
@@ -92,20 +86,6 @@
 	}
 
 	return files;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-+ (NSArray<NSURL*>*) urlsForFiles:(const TArray<CFile>&) files
-{
-	// Setup
-	NSMutableArray<NSURL*>*	urls = [NSMutableArray arrayWithCapacity:files.getCount()];
-
-	// Iterate files
-	for (TArray<CFile>::Iterator iterator = files.getIterator(); iterator; iterator++)
-		// Add URL
-		[urls addObject:[[NSURL alloc] initWithFile:*iterator]];
-
-	return urls;
 }
 
 @end
