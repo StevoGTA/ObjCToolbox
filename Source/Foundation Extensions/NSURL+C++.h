@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: Lifecycle methods
 
+- (instancetype) initWithFile:(const CFile&) file;
 - (instancetype) initWithFolder:(const CFolder&) folder;
 
 // MARK: Class methods
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (TArray<CFolder>) foldersFor:(NSArray<NSURL*>*) urls;
 + (TArray<CFile>) filesFor:(NSArray<NSURL*>*) urls;
+
++ (NSArray<NSURL*>*) urlsForFiles:(const TArray<CFile>&) files;
 
 @end
 
