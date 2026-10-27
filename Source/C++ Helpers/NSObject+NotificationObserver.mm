@@ -137,9 +137,33 @@ static	void	sNotificationHandler(const CString& notificationName, const OR<CNoti
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+- (void) registerForNotificationCenterAndName:(const SNotificationCenterAndName&) notificationCenterAndName
+		notificationObserverOptions:(NotificationObserverOptions) notificationObserverOptions
+		with:(NotificationProc) notificationProc
+{
+	// Register
+	[self registerForNotificationNamed:notificationCenterAndName.getNotificationName()
+			notificationCenter:notificationCenterAndName.getNotificationCenter()
+			notificationObserverOptions:notificationObserverOptions with:notificationProc];
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+- (void) registerForNotificationCenterAndName:(const SNotificationCenterAndName&) notificationCenterAndName
+		with:(NotificationProc) notificationProc
+{
+	// Register
+	[self registerForNotificationCenterAndName:notificationCenterAndName
+			notificationObserverOptions:kNotificationObserverOptionsNone with:notificationProc];
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 - (void) unregisterForNotificationNamed:(const CString&) notificationName
 		notificationCenter:(CNotificationCenter&) notificationCenter
 {
+	// Unregister
+	NotificationHandler*	notificationHandler = objc_getAssociatedObject(self, &notificationName);
+	notificationCenter.unregisterObserver(notificationName, (__bridge const void*) notificationHandler);
+
 	// Remove
 	objc_setAssociatedObject(self, &notificationName, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
